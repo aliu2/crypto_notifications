@@ -1,3 +1,5 @@
+import os
+import sys
 import requests
 from cry_not import utilities
 # https://api.telegram.org/bot<token>/METHOD_NAME
@@ -10,7 +12,10 @@ from cry_not import utilities
 
 
 def main():
-    utilities.get_bot_token()
+    if 'bot_token.json' not in os.listdir(os.getcwd()):
+        bot_token = input('Please enter your Telegram bot token:\n')
+        utilities.save_bot_token(bot_token)
+    # utilities.get_bot_token()
 
 
 if __name__ == '__main__':

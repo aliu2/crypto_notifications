@@ -4,18 +4,14 @@ import requests
 from cry_not import utilities
 # https://api.telegram.org/bot<token>/METHOD_NAME
 
-# bitcoin_api_url = 'https://api.coinmarketcap.com/v1/ticker/bitcoin/'
-# response = requests.get(bitcoin_api_url)
-# response_json = response.json()
-# print(type(response_json))
-# print(response_json[0])
-
-
 def main():
-    if 'bot_token.json' not in os.listdir(os.getcwd()):
-        bot_token = input('Please enter your Telegram bot token:\n')
-        utilities.save_bot_token(bot_token)
+    if 'tokens.json' not in os.listdir(os.getcwd()):
+        telegram_bot_token = input('Please enter your Telegram bot token:\n')
+        coinmarket_api_key = input('Please enter your Coinmarket API key:\n')
+        utilities.save_config(telegram_bot_token, coinmarket_api_key)
     # utilities.get_bot_token()
+
+    # bitcoin_price = utilities.get_prices()
 
 
 if __name__ == '__main__':

@@ -1,15 +1,21 @@
 import json
-import requests
+from requests import Request, Session
 
 
 def get_telegram_bot_token():
-    with open('tokens.json', 'r') as bot_token_file:
+    with open('config.json', 'r') as bot_token_file:
         data = json.load(bot_token_file)
-        print(data['telegramBotToken'])
+        return data['telegramBotToken']
+
+
+def get_coinmarket_api_key():
+    with open('config.json', 'r') as api_key_file:
+        data = json.load(api_key_file)
+        return data['coinmarketApiToken']
 
 
 def save_config(telegram_bot_token, coinmarket_api_key):
-    with open('tokens.json', 'w+') as bot_token_file:
+    with open('config.json', 'w+') as bot_token_file:
         telegram_bot_string = f'\"telegramBotToken\": \"{telegram_bot_token}\"'
         coinmarket_api_string = f'\"coinmarketApiToken\": \"{coinmarket_api_key}\"'
         json_string = '{' + telegram_bot_string + ',\n' + coinmarket_api_string + '}'
@@ -17,7 +23,22 @@ def save_config(telegram_bot_token, coinmarket_api_key):
 
 
 def get_prices():
-    bitcoin_api_url = 'https://api.coinmarketcap.com/v1/ticker/1027/'
-    response = requests.get(bitcoin_api_url)
-    response_json = response.json()
-    print(response_json[0])
+    url = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest'
+
+    parameters = {
+        'start': '1',
+        'limit': '5000',
+        'convert': 'USD'
+    }
+
+    headers = {
+        'Accepts': 'application/json',
+        'X-CMC_PRO_API_KEY': 'b54bcf4d-1bca-4e8e-9a24-22ff2c3d462c',
+    }
+
+    session = Session()
+    session.headers.update(headers)
+
+    response = session.get(url, params=parameters)
+    data = json.loads(response.text)
+    print(data)

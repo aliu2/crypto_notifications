@@ -64,4 +64,4 @@ Then, enter the following line to schedule this python program (all paths must b
 
 `0 * * * * cd /location/of/crypto_notifications && /location/of/python3 crypto_notifications.py`
 
-This tells cron to change directory into the project directory and run the main program using python3, and to do this on the 0th minute of every hour of every day of the month, every month, every day of the year. Or, to put it simple, every hour!
+This tells cron to change directory into the project directory and run the main program using python3, and to do this on the 0th minute of every hour of every day of the month, every month, every day of the week. Or, to put it simple, every hour!

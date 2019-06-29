@@ -22,23 +22,26 @@ def save_config(telegram_bot_token, coinmarket_api_key):
         bot_token_file.write(json_string)
 
 
-def get_prices():
-    url = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest'
+# TODO:
+#   1. Get coinmarket api key
+#   2. Insert api key into request header
+#   3. Make requests
+def get_prices(coinmarket_api_key):
+    coinmarket_api_url = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest'
 
     parameters = {
-        'start': '1',
-        'limit': '5000',
-        'convert': 'USD'
+        'id': '1',
+        'convert': 'EUR'
     }
 
     headers = {
         'Accepts': 'application/json',
-        'X-CMC_PRO_API_KEY': 'b54bcf4d-1bca-4e8e-9a24-22ff2c3d462c',
+        'X-CMC_PRO_API_KEY': coinmarket_api_key,
     }
 
     session = Session()
     session.headers.update(headers)
 
-    response = session.get(url, params=parameters)
+    response = session.get(coinmarket_api_url, params=parameters)
     data = json.loads(response.text)
-    print(data)
+    return data['data']['1']['quote']['EUR']['price']

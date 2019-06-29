@@ -14,9 +14,7 @@ def main():
 
     telegram_bot_token = utilities.get_telegram_bot_token()
     coinmarket_api_key = utilities.get_coinmarket_api_key()
-    print(telegram_bot_token)
-    print(coinmarket_api_key)
-    # bitcoin_price = utilities.get_prices()
+    bitcoin_price = utilities.get_prices(coinmarket_api_key)
 
 
 if __name__ == '__main__':
